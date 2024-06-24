@@ -7,7 +7,7 @@ var connectionString = builder.Configuration.GetConnectionString("TrekstorDbCont
 
 builder.Services.AddDbContext<TrekstorDbContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<TrekstorDbContext>();
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>().AddEntityFrameworkStores<TrekstorDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -34,6 +34,39 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+/*
+using (var scope = app.Services.CreateScope())
+{
+    var RoleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
+    var roles = new[] { "Administrador", "Supervisor", "Agente de Ventas" };
 
-app.Run();
+    foreach (var role in roles)
+    {
+        if (!await RoleManager.RoleExistsAsync(role)) 
+            await RoleManager.CreateAsync(new IdentityRole(role));
+        {
+
+        }
+    }
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+    string email = "admin@Trekstor.com";
+    string password = "Test1234!";
+
+    if (await userManager.FindByEmailAsync(email) == null)
+    {
+        var user= new ApplicationUser();
+        user.UserName = email;
+        user.Email = email;
+
+        userManager.CreateAsync(user,password);
+
+        userManager.AddToRoleAsync(user, "Administrador");  
+    }*/
+
+    app.Run();
