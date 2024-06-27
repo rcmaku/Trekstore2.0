@@ -34,12 +34,13 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-/*
+
+
 using (var scope = app.Services.CreateScope())
 {
     var RoleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    var roles = new[] { "Administrador", "Supervisor", "Agente de Ventas" };
+    var roles = new[] { "Administrador", "Supervisor", "Ventas" };
 
     foreach (var role in roles)
     {
@@ -50,7 +51,7 @@ using (var scope = app.Services.CreateScope())
         }
     }
 }
-
+/*
 using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();

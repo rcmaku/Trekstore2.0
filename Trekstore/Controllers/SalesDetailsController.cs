@@ -22,7 +22,7 @@ namespace Trekstore.Controllers
         }
 
         // GET: SalesDetails
-        [Authorize(Roles = "Administrador || Supervisor")]
+        [Authorize(Roles = "Supervisor")]
         public async Task<IActionResult> Index()
         {
             var trekstorDbContext = _context.SalesDetails.Include(s => s.Clients).Include(s => s.Product);
@@ -30,7 +30,7 @@ namespace Trekstore.Controllers
         }
 
         // GET: SalesDetails/Details/5
-        [Authorize(Roles = "Administrador || Supervisor")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -51,7 +51,7 @@ namespace Trekstore.Controllers
         }
 
         // GET: SalesDetails/Create
-        [Authorize(Roles = "Administrador || Agente de Ventas")]
+        [Authorize(Roles = "Ventas")]
         public IActionResult Create()
         {
             ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "FirstName");
@@ -62,7 +62,7 @@ namespace Trekstore.Controllers
         // POST: SalesDetails/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
+        [Authorize(Roles = " Ventas")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SalesDetailsID,Amount,Date,ProductId,ClientId")] SalesDetails salesDetails)

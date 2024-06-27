@@ -51,7 +51,7 @@ namespace Trekstore.Controllers
         }
 
         // GET: PurchaseDetails/Create
-        [Authorize (Roles = "Administrador || Agente de Ventas")]
+        [Authorize (Roles = "Ventas")]
         public IActionResult Create()
         {
             ViewData["ProductID"] = new SelectList(_context.Products, "ProductId", "ProductName");
@@ -64,7 +64,7 @@ namespace Trekstore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Ventas")]
         public async Task<IActionResult> Create([Bind("purch_id,Amount,PurchDate,ProductID,ProviderID")] PurchaseDetails purchaseDetails)
         {
             if (ModelState.IsValid)

@@ -19,7 +19,7 @@ namespace Trekstore.Controllers
         {
             _context = context;
         }
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         // GET: Providers
         public async Task<IActionResult> Index()
         {
@@ -27,6 +27,7 @@ namespace Trekstore.Controllers
         }
 
         // GET: Providers/Details/5
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
