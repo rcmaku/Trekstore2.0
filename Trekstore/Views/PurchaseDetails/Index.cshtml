@@ -8,23 +8,23 @@
 <h1>Reporte de Compras</h1>
 
 <p>
-    <a asp-controller="Providers" asp-action="Index">Add Provider</a>
+    <a asp-controller="Providers" asp-action="Index">Agregar Proveedor</a>
 
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+                Cantidad
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PurchDate)
+                Fecha de Compra
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product)
+                Producto
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Provider)
+                Proveedor
             </th>
             <th></th>
         </tr>
@@ -45,9 +45,17 @@
                 @Html.DisplayFor(modelItem => item.Provider.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.purch_id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.purch_id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.purch_id">Delete</a>
+                    @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
+                    {
+                <a asp-action="Edit" asp-route-id="@item.purch_id">Editar | </a> 
+                <a asp-action="Delete" asp-route-id="@item.purch_id">Eliminar</a>
+                    }
+
+                    @if (ViewContext.HttpContext.User.IsInRole("Supervisor"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.purch_id">Editar</a>
+                        
+                    }
             </td>
         </tr>
 }

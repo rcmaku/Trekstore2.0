@@ -5,26 +5,37 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Clientes</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
-    <a asp-controller="SalesDetails" asp-action="Index">Return</a>
+    @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
+    {
+        <a asp-action="Create">Nuevo CLiente</a>
+        <a asp-controller="SalesDetails" asp-action="Index">Reporte de Ventas</a>
+    }
+    
+
+    @if (ViewContext.HttpContext.User.IsInRole("Ventas"))
+    {
+       <a asp-action="Create">Nuevo CLiente</a>
+        <a asp-controller="SalesDetails" asp-action="Index">Regresar</a>
+    }
+
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                Primer Nombre
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                Apellido
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
+                Telefono
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Correo
             </th>
             <th></th>
         </tr>
@@ -45,9 +56,17 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ClientId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ClientId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ClientId">Delete</a>
+                    @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
+                    {
+                <a asp-action="Edit" asp-route-id="@item.ClientId">Editar | </a> 
+                <a asp-action="Delete" asp-route-id="@item.ClientId">Eliminar</a>
+                    }
+
+                    @if (ViewContext.HttpContext.User.IsInRole("Supervisor"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.ClientId">Editar</a>
+                        
+                    }
             </td>
         </tr>
 }

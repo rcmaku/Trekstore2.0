@@ -22,7 +22,7 @@ namespace Trekstore.Controllers
         }
 
         // GET: SalesDetails
-        [Authorize(Roles = "Supervisor")]
+        [Authorize(Roles = "Administrador, Supervisor, Ventas")]
         public async Task<IActionResult> Index()
         {
             var trekstorDbContext = _context.SalesDetails.Include(s => s.Clients).Include(s => s.Product);
@@ -30,7 +30,7 @@ namespace Trekstore.Controllers
         }
 
         // GET: SalesDetails/Details/5
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador, Supervisor")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -51,7 +51,7 @@ namespace Trekstore.Controllers
         }
 
         // GET: SalesDetails/Create
-        [Authorize(Roles = "Ventas")]
+        [Authorize(Roles = "Administrador, Supervisor, Ventas")]
         public IActionResult Create()
         {
             ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "FirstName");
@@ -62,7 +62,7 @@ namespace Trekstore.Controllers
         // POST: SalesDetails/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = " Ventas")]
+        [Authorize(Roles = " Administrador, Supervisor,Ventas")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SalesDetailsID,Amount,Date,ProductId,ClientId")] SalesDetails salesDetails)
@@ -86,7 +86,7 @@ namespace Trekstore.Controllers
         }
 
         // GET: SalesDetails/Edit/5
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador, Supervisor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -107,7 +107,7 @@ namespace Trekstore.Controllers
         // POST: SalesDetails/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador, Supervisor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("SalesDetailsID,Amount,Date,ProductId,ClientId")] SalesDetails salesDetails)
@@ -143,7 +143,7 @@ namespace Trekstore.Controllers
         }
 
         // GET: SalesDetails/Delete/5
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador, Supervisor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -164,7 +164,7 @@ namespace Trekstore.Controllers
         }
 
         // POST: SalesDetails/Delete/5
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador, Supervisor")]
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

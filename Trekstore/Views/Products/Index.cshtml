@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Productos</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Agregar Nuevo Producto</a> |
     <a asp-controller="Categories" asp-action="Index">Categorias de Producto</a>
 </p>
 </p>
@@ -16,19 +16,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ProductName)
+                Producto
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductDescription)
+                Descripcion
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductPrice)
+                Precio
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category)
+                Categoria
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InStock)
+                InStock
             </th>
             <th></th>
         </tr>
@@ -52,9 +52,18 @@
                     @Html.DisplayFor(modelItem => item.InStock)
             </td>
             <td>
-                    <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                    @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
+                    {
+                     <a asp-action="Edit" asp-route-id="@item.ProductId">Editar |</a> 
+                    <a asp-action="Delete" asp-route-id="@item.ProductId">Eliminar</a>
+                    }
+
+                    @if (ViewContext.HttpContext.User.IsInRole("Supervisor"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.ProductId">Editar |</a> 
+                        
+                    }
+                    
             </td>
         </tr>
 }

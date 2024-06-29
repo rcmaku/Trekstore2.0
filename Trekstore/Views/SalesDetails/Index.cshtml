@@ -8,25 +8,26 @@
 <h1>Reporte de Ventas</h1>
 
 <p>
-    <a asp-controller="Clients" asp-action="Index">Clients</a>
+    <a asp-controller="Clients" asp-action="Index">Clientes </a>
+
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Product)
+                Producto
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+                Cantidad
             </th>
             <th>
-                @Html.DisplayName("Nombre")
+                Primer Nombre del Cliente
             </th>
             <th>
-                @Html.DisplayName("Apellido")
+                Apellido
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                Fecha
             </th>
             <th></th>
         </tr>
@@ -52,9 +53,17 @@
 
 
             <td>
-                <a asp-action="Edit" asp-route-id="@item.SalesDetailsID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SalesDetailsID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SalesDetailsID">Delete</a>
+                    @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
+                    {
+                <a asp-action="Edit" asp-route-id="@item.SalesDetailsID">Editar</a> 
+                <a asp-action="Delete" asp-route-id="@item.SalesDetailsID">Eliminar</a>
+                    }
+
+                    @if (ViewContext.HttpContext.User.IsInRole("Supervisor"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.SalesDetailsID">Editar</a>
+                        
+                    }
             </td>
         </tr>
 }
