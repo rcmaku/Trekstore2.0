@@ -46,6 +46,7 @@ namespace Trekstore.Controllers
         }
 
         // GET: Providers/Create
+        [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +55,7 @@ namespace Trekstore.Controllers
         // POST: Providers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProviderID,Name,Telephone,Address")] Providers providers)
