@@ -11,7 +11,7 @@ using Trekstore.Models;
 
 namespace Trekstore.Controllers
 {
-    [Authorize (Roles = "Administrador")]
+    [Authorize]
     public class CategoriesController : Controller
     {
         private readonly TrekstorDbContext _context;
@@ -164,3 +164,4 @@ namespace Trekstore.Controllers
         }
     }
 }
+

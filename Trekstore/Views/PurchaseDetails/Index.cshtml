@@ -8,9 +8,31 @@
 <h1>Reporte de Compras</h1>
 
 <p>
+    <a asp-action="Create">Agregar Nuevo Compra</a> |
     <a asp-controller="Providers" asp-action="Index">Agregar Proveedor</a>
 
 </p>
+
+<form method="get" asp-controller="PurchaseDetails" asp-action="Index">
+    <div class="form-row">
+        <div class="col-md-12
+mb-3">
+            <input type="text" name="searchString" class="form-control" placeholder="Buscar por nombre de producto" value="@ViewData["CurrentFilter"]" />
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="input-group">
+                <input type="date" name="startDate" class="form-control" value="@ViewData["CurrentStartDate"]" />
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> a </span>
+                </div>
+                <input type="date" name="endDate" class="form-control" value="@ViewData["CurrentEndDate"]" />
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <input type="submit" value="Buscar" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>

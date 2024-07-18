@@ -22,10 +22,19 @@ namespace Trekstore.Controllers
 
         [Authorize(Roles = "Administrador, Supervisor")]
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var trekstorDbContext = _context.Products.Include(p => p.Category);
-            return View(await trekstorDbContext.ToListAsync());
+            var products = from p in _context.Products
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(s => s.ProductName.Contains(searchString));
+            }
+
+            products = products.Include(p => p.Category);
+
+            return View(await products.ToListAsync());
         }
 
         // GET: Products/Details/5

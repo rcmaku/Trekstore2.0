@@ -10,14 +10,14 @@
 <p>
     @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
     {
-        <a asp-action="Create">Nuevo CLiente</a>
+        <a asp-action="Create">Nuevo Cliente | </a>
         <a asp-controller="SalesDetails" asp-action="Index">Reporte de Ventas</a>
     }
-    
+
 
     @if (ViewContext.HttpContext.User.IsInRole("Ventas"))
     {
-       <a asp-action="Create">Nuevo CLiente</a>
+        <a asp-action="Create">Nuevo Cliente | </a>
         <a asp-controller="SalesDetails" asp-action="Index">Regresar</a>
     }
 
@@ -41,34 +41,35 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
                     @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
                     {
-                <a asp-action="Edit" asp-route-id="@item.ClientId">Editar | </a> 
-                <a asp-action="Delete" asp-route-id="@item.ClientId">Eliminar</a>
+                        <a asp-action="Edit" asp-route-id="@item.ClientId">Editar | </a>
+                        <a asp-action="Delete" asp-route-id="@item.ClientId">Eliminar</a>
                     }
 
                     @if (ViewContext.HttpContext.User.IsInRole("Supervisor"))
                     {
                         <a asp-action="Edit" asp-route-id="@item.ClientId">Editar</a>
-                        
+
                     }
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

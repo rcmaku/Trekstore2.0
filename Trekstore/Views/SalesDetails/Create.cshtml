@@ -6,6 +6,13 @@
 }
 
 <h1>Agregar Venta</h1>
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["AlertMessage"]
+    </div>
+}
+
 
 <hr />
 <div class="row">

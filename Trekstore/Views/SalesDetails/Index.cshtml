@@ -8,9 +8,17 @@
 <h1>Reporte de Ventas</h1>
 
 <p>
-    <a asp-controller="Clients" asp-action="Index">Clientes </a>
-
+    <a asp-controller="Clients" asp-action="Index">Clientes </a> |
+    <a asp-action="Create">Nueva Venta</a>
 </p>
+<form method="get" asp-controller="SalesDetails" asp-action="Index">
+    <div class="form-group">
+        <input type="text" name="searchString" class="form-control" placeholder="Buscar por nombre de producto" value="@ViewData["CurrentFilter"]" />
+        <br />
+        <input type="submit" value="Buscar" class="btn btn-primary" />
+    </div>
+</form>
+<br />
 <table class="table">
     <thead>
         <tr>

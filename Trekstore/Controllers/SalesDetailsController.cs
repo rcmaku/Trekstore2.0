@@ -23,10 +23,17 @@ namespace Trekstore.Controllers
 
         // GET: SalesDetails
         [Authorize(Roles = "Administrador, Supervisor, Ventas")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var trekstorDbContext = _context.SalesDetails.Include(s => s.Clients).Include(s => s.Product);
-            return View(await trekstorDbContext.ToListAsync());
+            var salesDetails = from s in _context.SalesDetails.Include(s => s.Clients).Include(s => s.Product)
+                               select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                salesDetails = salesDetails.Where(s => s.Clients.FirstName.Contains(searchString) || s.Clients.LastName.Contains(searchString));
+            }
+
+            return View(await salesDetails.ToListAsync());
         }
 
         // GET: SalesDetails/Details/5
@@ -65,6 +72,7 @@ namespace Trekstore.Controllers
         [Authorize(Roles = " Administrador, Supervisor,Ventas")]
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Create([Bind("SalesDetailsID,Amount,Date,ProductId,ClientId")] SalesDetails salesDetails)
         {
             if (ModelState.IsValid)
@@ -75,11 +83,18 @@ namespace Trekstore.Controllers
                     product.InStock -= salesDetails.Amount;
                     _context.Add(salesDetails);
                     await _context.SaveChangesAsync();
+
+                    if (product.InStock <= 10)
+                    {
+                        TempData["AlertMessage"] = "Producto bajo en existencias, adquirir más productos.";
+                    }
+
                     return RedirectToAction(nameof(Index));
                 }
-                ModelState.AddModelError("", "Insufficient stock for the selected product.");
 
+                ModelState.AddModelError("", "Existencias insuficientes para el producto seleccionado.");
             }
+
             ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "FirstName", salesDetails.ClientId);
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName", salesDetails.ProductId);
             return View(salesDetails);

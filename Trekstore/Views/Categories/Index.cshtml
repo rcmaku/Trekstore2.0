@@ -24,29 +24,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoriaNombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoriaDescripcion)
-            </td>
-            <td>
-               @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
-                {
-                <a asp-action="Edit" asp-route-id="@item.CategoryID">Editar | </a> 
-                <a asp-action="Delete" asp-route-id="@item.CategoryID">Eliminar</a>
-                }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoriaNombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoriaDescripcion)
+                </td>
+                <td>
+                    @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.CategoryID">Editar | </a>
+                        <a asp-action="Delete" asp-route-id="@item.CategoryID">Eliminar</a>
+                    }
 
                     @if (ViewContext.HttpContext.User.IsInRole("Supervisor"))
                     {
-                     <a asp-action="Edit" asp-route-id="@item.CategoryID">Editar</a>
-                        
-                        
+                        <a asp-action="Edit" asp-route-id="@item.CategoryID">Editar</a>
+
+
                     }
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -23,10 +23,28 @@ namespace Trekstore.Controllers
         }
         [Authorize(Roles = "Administrador, Supervisor")]
         // GET: PurchaseDetails
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, DateTime? startDate, DateTime? endDate)
         {
-            var trekstorDbContext = _context.PurchaseDetails.Include(p => p.Product).Include(p => p.Provider);
-            return View(await trekstorDbContext.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentStartDate"] = startDate?.ToString("yyyy-MM-dd");
+            ViewData["CurrentEndDate"] = endDate?.ToString("yyyy-MM-dd");
+
+            var purchaseDetails = _context.PurchaseDetails
+                                           .Include(p => p.Product)
+                                           .Include(p => p.Provider)
+                                           .AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                purchaseDetails = purchaseDetails.Where(s => s.Product.ProductName.Contains(searchString));
+            }
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                purchaseDetails = purchaseDetails.Where(p => p.PurchDate >= startDate && p.PurchDate <= endDate);
+            }
+
+            return View(await purchaseDetails.ToListAsync());
         }
 
         [Authorize (Roles ="Administrador")]

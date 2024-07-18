@@ -22,14 +22,12 @@ namespace Trekstore.Controllers
         }
 
         // GET: Clients
-        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Client.ToListAsync());
         }
 
         // GET: Clients/Details/5
-        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -48,7 +46,7 @@ namespace Trekstore.Controllers
         }
 
         // GET: Clients/Create
-        [Authorize(Roles = "Administrador")]
+
         public IActionResult Create()
         {
             return View();
