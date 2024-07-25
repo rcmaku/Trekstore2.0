@@ -25,7 +25,7 @@ namespace Trekstore.Controllers
         [Authorize(Roles = "Administrador, Supervisor, Ventas")]
         public async Task<IActionResult> Index(string searchString)
         {
-            var salesDetails = from s in _context.SalesDetails.Include(s => s.Clients).Include(s => s.Product)
+            var salesDetails = from s in _context.SalesDetails.Include(s => s.Clients).Include(s => s.Product).Include(s => s.TipoDePago)
                                select s;
 
             if (!String.IsNullOrEmpty(searchString))
@@ -48,6 +48,7 @@ namespace Trekstore.Controllers
             var salesDetails = await _context.SalesDetails
                 .Include(s => s.Clients)
                 .Include(s => s.Product)
+                .Include(s => s.TipoDePago)
                 .FirstOrDefaultAsync(m => m.SalesDetailsID == id);
             if (salesDetails == null)
             {
@@ -63,6 +64,7 @@ namespace Trekstore.Controllers
         {
             ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "FirstName");
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName");
+            ViewData["TipoDePagoID"] = new SelectList(_context.TipoDePago, "tipoPagoID", "tipoPago");
             return View();
         }
 
@@ -73,7 +75,7 @@ namespace Trekstore.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Create([Bind("SalesDetailsID,Amount,Date,ProductId,ClientId")] SalesDetails salesDetails)
+        public async Task<IActionResult> Create([Bind("SalesDetailsID,Amount,Date,ProductId,ClientId, TipoDePagoID")] SalesDetails salesDetails)
         {
             if (ModelState.IsValid)
             {
@@ -97,6 +99,7 @@ namespace Trekstore.Controllers
 
             ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "FirstName", salesDetails.ClientId);
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName", salesDetails.ProductId);
+            ViewData["TipoDePagoID"] = new SelectList(_context.TipoDePago, "tipoPagoID", "tipoPago", salesDetails.TipoDePagoID);
             return View(salesDetails);
         }
 
@@ -116,6 +119,7 @@ namespace Trekstore.Controllers
             }
             ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "FirstName", salesDetails.ClientId);
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductDescription", salesDetails.ProductId);
+            ViewData["TipoDePagoID"] = new SelectList(_context.TipoDePago, "tipoPagoID", "tipoPago", salesDetails.TipoDePagoID);
             return View(salesDetails);
         }
 
@@ -125,7 +129,7 @@ namespace Trekstore.Controllers
         [Authorize(Roles = "Administrador, Supervisor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SalesDetailsID,Amount,Date,ProductId,ClientId")] SalesDetails salesDetails)
+        public async Task<IActionResult> Edit(int id, [Bind("SalesDetailsID,Amount,Date,ProductId,ClientId,TipoDePagoID")] SalesDetails salesDetails)
         {
             if (id != salesDetails.SalesDetailsID)
             {
@@ -154,6 +158,7 @@ namespace Trekstore.Controllers
             }
             ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "FirstName", salesDetails.ClientId);
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName", salesDetails.ProductId);
+            ViewData["TipoDePagoID"] = new SelectList(_context.TipoDePago, "tipoPagoID", "tipoPago", salesDetails.TipoDePagoID);
             return View(salesDetails);
         }
 
@@ -169,6 +174,7 @@ namespace Trekstore.Controllers
             var salesDetails = await _context.SalesDetails
                 .Include(s => s.Clients)
                 .Include(s => s.Product)
+                .Include(s => s.TipoDePago)
                 .FirstOrDefaultAsync(m => m.SalesDetailsID == id);
             if (salesDetails == null)
             {

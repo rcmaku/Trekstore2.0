@@ -32,6 +32,7 @@ namespace Trekstore.Controllers
             var purchaseDetails = _context.PurchaseDetails
                                            .Include(p => p.Product)
                                            .Include(p => p.Provider)
+                                           .Include(p => p.TipoDePago)
                                            .AsQueryable();
 
             if (!String.IsNullOrEmpty(searchString))
@@ -47,7 +48,7 @@ namespace Trekstore.Controllers
             return View(await purchaseDetails.ToListAsync());
         }
 
-        [Authorize (Roles ="Administrador")]
+        [Authorize(Roles = "Administrador")]
         // GET: PurchaseDetails/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -59,6 +60,7 @@ namespace Trekstore.Controllers
             var purchaseDetails = await _context.PurchaseDetails
                 .Include(p => p.Product)
                 .Include(p => p.Provider)
+                .Include(p => p.TipoDePago)
                 .FirstOrDefaultAsync(m => m.purch_id == id);
             if (purchaseDetails == null)
             {
@@ -74,6 +76,8 @@ namespace Trekstore.Controllers
         {
             ViewData["ProductID"] = new SelectList(_context.Products, "ProductId", "ProductName");
             ViewData["ProviderID"] = new SelectList(_context.Providers, "ProviderID", "Name");
+            ViewData["TipoDePagoID"] = new SelectList(_context.TipoDePago, "tipoPagoID", "tipoPago");
+
             return View();
         }
 
@@ -83,20 +87,21 @@ namespace Trekstore.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Ventas")]
-        public async Task<IActionResult> Create([Bind("purch_id,Amount,PurchDate,ProductID,ProviderID")] PurchaseDetails purchaseDetails)
+        public async Task<IActionResult> Create([Bind("purch_id,Amount,PurchDate,ProductID,ProviderID, TipoDePagoID")] PurchaseDetails purchaseDetails)
         {
             if (ModelState.IsValid)
             {
                 var product = await _context.Products.FindAsync(purchaseDetails.ProductID);
-                
-                    product.InStock += purchaseDetails.Amount;
-                    _context.Add(purchaseDetails);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                
+
+                product.InStock += purchaseDetails.Amount;
+                _context.Add(purchaseDetails);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
             }
             ViewData["ProductID"] = new SelectList(_context.Products, "ProductId", "ProductName", purchaseDetails.ProductID);
-            ViewData["ProviderID"] = new SelectList(_context.Providers, "ProviderID", "ProviderID", purchaseDetails.ProviderID);
+            ViewData["ProviderID"] = new SelectList(_context.Providers, "ProviderID", "Name", purchaseDetails.ProviderID);
+            ViewData["TipoDePagoID"] = new SelectList(_context.TipoDePago, "tipoPagoID", "tipoPago", purchaseDetails.TipoDePagoID);
             return View(purchaseDetails);
         }
 
@@ -115,7 +120,8 @@ namespace Trekstore.Controllers
                 return NotFound();
             }
             ViewData["ProductID"] = new SelectList(_context.Products, "ProductId", "ProductName", purchaseDetails.ProductID);
-            ViewData["ProviderID"] = new SelectList(_context.Providers, "ProviderID", "ProviderID", purchaseDetails.ProviderID);
+            ViewData["ProviderID"] = new SelectList(_context.Providers, "ProviderID", "Name", purchaseDetails.ProviderID);
+            ViewData["TipoDePagoID"] = new SelectList(_context.TipoDePago, "tipoPagoID", "tipoPago", purchaseDetails.TipoDePagoID);
             return View(purchaseDetails);
         }
 
@@ -125,7 +131,7 @@ namespace Trekstore.Controllers
         [Authorize(Roles = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("purch_id,Amount,PurchDate,ProductID,ProviderID")] PurchaseDetails purchaseDetails)
+        public async Task<IActionResult> Edit(int id, [Bind("purch_id,Amount,PurchDate,ProductID,ProviderID, TipoDePagoID")] PurchaseDetails purchaseDetails)
         {
             if (id != purchaseDetails.purch_id)
             {
@@ -153,7 +159,8 @@ namespace Trekstore.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductID"] = new SelectList(_context.Products, "ProductId", "ProductName", purchaseDetails.Product);
-            ViewData["ProviderID"] = new SelectList(_context.Providers, "ProviderID", "ProviderID", purchaseDetails.ProviderID);
+            ViewData["ProviderID"] = new SelectList(_context.Providers, "ProviderID", "Name", purchaseDetails.ProviderID);
+            ViewData["TipoDePagoID"] = new SelectList(_context.TipoDePago, "tipoPagoID", "tipoPago", purchaseDetails.TipoDePagoID);
             return View(purchaseDetails);
         }
 
@@ -169,6 +176,7 @@ namespace Trekstore.Controllers
             var purchaseDetails = await _context.PurchaseDetails
                 .Include(p => p.Product)
                 .Include(p => p.Provider)
+                .Include(p => p.TipoDePago)
                 .FirstOrDefaultAsync(m => m.purch_id == id);
             if (purchaseDetails == null)
             {

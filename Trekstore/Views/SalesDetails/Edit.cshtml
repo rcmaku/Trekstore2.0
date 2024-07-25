@@ -34,6 +34,11 @@
                 <select asp-for="ClientId" class="form-control" asp-items="ViewBag.ClientId"></select>
                 <span asp-validation-for="ClientId" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="TipoDePagoID" class="control-label">Tipo De Pago</label>
+                <select asp-for="TipoDePagoID" class="form-control" asp-items="ViewBag.TipoDePagoID"></select>
+                <span asp-validation-for="TipoDePagoID" class="text-danger"></span>
+            </div>
             <br />
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" />
@@ -47,5 +52,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

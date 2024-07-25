@@ -97,7 +97,7 @@ namespace Trekstore.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "CategoryID", products.CategoryID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "CategoriaNombre", products.CategoryID);
             return View(products);
         }
 
@@ -134,7 +134,7 @@ namespace Trekstore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "CategoryID", products.CategoryID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "CategoriaNombre", products.CategoryID);
             return View(products);
         }
 

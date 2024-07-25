@@ -32,6 +32,8 @@ public class TrekstorDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Trekstore.Models.SalesDetails> SalesDetails { get; set; } = default!;
 
+public DbSet<Trekstore.Models.TipoDePago> TipoDePago { get; set; } = default!;
+
 }
 /*
 public partial class TrekstorDbcontext : DbContext
