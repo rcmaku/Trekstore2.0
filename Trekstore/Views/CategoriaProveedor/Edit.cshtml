@@ -1,0 +1,40 @@
+﻿@model Trekstore.Models.CategoriaProveedor
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar</h1>
+
+<h4>Tipo de Proveedor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CategoriaProveedorID" />
+            <div class="form-group">
+                <label asp-for="CategoriaProveedorNombre" class="control-label">Nombre de categoria</label>
+                <input asp-for="CategoriaProveedorNombre" class="form-control" />
+                <span asp-validation-for="CategoriaProveedorNombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoriaProveedorDescripcion" class="control-label">Descripcion de categoria</label>
+                <input asp-for="CategoriaProveedorDescripcion" class="form-control" />
+                <span asp-validation-for="CategoriaProveedorDescripcion" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index">Regresar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -12,6 +12,10 @@ namespace Trekstore.Models
 
         public string Address { get; set; } = null!;
 
+        public int? CategoriaProveedorID { get; set; }
+
+        public virtual CategoriaProveedor? CategoriaProveedor { get; set; }
+
         public virtual ICollection<PurchaseDetails> PurchaseDetails { get; set; } = new List<PurchaseDetails>();
     }
 }

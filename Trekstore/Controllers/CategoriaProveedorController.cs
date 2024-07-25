@@ -11,32 +11,23 @@ using Trekstore.Models;
 
 namespace Trekstore.Controllers
 {
-    public class ProvidersController : Controller
+    public class CategoriaProveedorController : Controller
     {
         private readonly TrekstorDbContext _context;
 
-        public ProvidersController(TrekstorDbContext context)
+        public CategoriaProveedorController(TrekstorDbContext context)
         {
             _context = context;
         }
+
+        // GET: CategoriaProveedor
         [Authorize(Roles = "Administrador")]
-        // GET: Providers
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index()
         {
-            var Providers = from r in _context.Providers
-                           select r;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                Providers = Providers.Where(c => c.Name.Contains(searchString));
-            }
-
-            Providers = Providers.Include(r => r.CategoriaProveedor);
-
-            return View(await Providers.ToListAsync());
+            return View(await _context.CategoriaProveedor.ToListAsync());
         }
 
-        // GET: Providers/Details/5
+        // GET: CategoriaProveedor/Details/5
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Details(int? id)
         {
@@ -45,43 +36,41 @@ namespace Trekstore.Controllers
                 return NotFound();
             }
 
-            var providers = await _context.Providers
-                .FirstOrDefaultAsync(m => m.ProviderID == id);
-            if (providers == null)
+            var categoriaProveedor = await _context.CategoriaProveedor
+                .FirstOrDefaultAsync(m => m.CategoriaProveedorID == id);
+            if (categoriaProveedor == null)
             {
                 return NotFound();
             }
 
-            return View(providers);
+            return View(categoriaProveedor);
         }
 
-        // GET: Providers/Create
+        // GET: CategoriaProveedor/Create
         [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
-            ViewData["CategoriaProveedorID"] = new SelectList(_context.CategoriaProveedor, "CategoriaProveedorID", "CategoriaProveedorNombre");
             return View();
         }
 
-        // POST: Providers/Create
+        // POST: CategoriaProveedor/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Roles = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProviderID,Name,Telephone,Address,CategoriaProveedorID")] Providers providers)
+        public async Task<IActionResult> Create([Bind("CategoriaProveedorID,CategoriaProveedorNombre,CategoriaProveedorDescripcion")] CategoriaProveedor categoriaProveedor)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(providers);
+                _context.Add(categoriaProveedor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaProveedorID"] = new SelectList(_context.CategoriaProveedor, "CategoriaProveedorID", "CategoriaProveedorNombre",providers.CategoriaProveedorID);
-            return View(providers);
+            return View(categoriaProveedor);
         }
 
-        // GET: Providers/Edit/5
+        // GET: CategoriaProveedor/Edit/5
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -90,24 +79,23 @@ namespace Trekstore.Controllers
                 return NotFound();
             }
 
-            var providers = await _context.Providers.FindAsync(id);
-            if (providers == null)
+            var categoriaProveedor = await _context.CategoriaProveedor.FindAsync(id);
+            if (categoriaProveedor == null)
             {
                 return NotFound();
             }
-            ViewData["CategoriaProveedorID"] = new SelectList(_context.CategoriaProveedor, "CategoriaProveedorID", "CategoriaProveedorNombre", providers.CategoriaProveedorID);
-            return View(providers);
+            return View(categoriaProveedor);
         }
 
-        // POST: Providers/Edit/5
+        // POST: CategoriaProveedor/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Roles = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProviderID,Name,Telephone,Address,CategoriaProveedorID")] Providers providers)
+        public async Task<IActionResult> Edit(int id, [Bind("CategoriaProveedorID,CategoriaProveedorNombre,CategoriaProveedorDescripcion")] CategoriaProveedor categoriaProveedor)
         {
-            if (id != providers.ProviderID)
+            if (id != categoriaProveedor.CategoriaProveedorID)
             {
                 return NotFound();
             }
@@ -116,12 +104,12 @@ namespace Trekstore.Controllers
             {
                 try
                 {
-                    _context.Update(providers);
+                    _context.Update(categoriaProveedor);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProvidersExists(providers.ProviderID))
+                    if (!CategoriaProveedorExists(categoriaProveedor.CategoriaProveedorID))
                     {
                         return NotFound();
                     }
@@ -132,11 +120,10 @@ namespace Trekstore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaProveedorID"] = new SelectList(_context.CategoriaProveedor, "CategoriaProveedorID", "CategoriaProveedorNombre", providers.CategoriaProveedorID);
-            return View(providers);
+            return View(categoriaProveedor);
         }
 
-        // GET: Providers/Delete/5
+        // GET: CategoriaProveedor/Delete/5
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -145,36 +132,35 @@ namespace Trekstore.Controllers
                 return NotFound();
             }
 
-            var providers = await _context.Providers
-                .Include(x => x.CategoriaProveedor)
-                .FirstOrDefaultAsync(m => m.ProviderID == id);
-            if (providers == null)
+            var categoriaProveedor = await _context.CategoriaProveedor
+                .FirstOrDefaultAsync(m => m.CategoriaProveedorID == id);
+            if (categoriaProveedor == null)
             {
                 return NotFound();
             }
 
-            return View(providers);
+            return View(categoriaProveedor);
         }
 
-        // POST: Providers/Delete/5
+        // POST: CategoriaProveedor/Delete/5
         [Authorize(Roles = "Administrador")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var providers = await _context.Providers.FindAsync(id);
-            if (providers != null)
+            var categoriaProveedor = await _context.CategoriaProveedor.FindAsync(id);
+            if (categoriaProveedor != null)
             {
-                _context.Providers.Remove(providers);
+                _context.CategoriaProveedor.Remove(categoriaProveedor);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProvidersExists(int id)
+        private bool CategoriaProveedorExists(int id)
         {
-            return _context.Providers.Any(e => e.ProviderID == id);
+            return _context.CategoriaProveedor.Any(e => e.CategoriaProveedorID == id);
         }
     }
 }

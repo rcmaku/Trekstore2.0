@@ -8,10 +8,19 @@
 <h1>Proveedores</h1>
 
 <p>
-    <a asp-action="Create">Agregar Proveedor</a>
-    <a asp-controller="PurchaseDetails" asp-action="Index">Regresar</a>
+    <a asp-action="Create">Agregar Proveedor</a> |
+    <a asp-controller="CategoriaProveedor" asp-action="Index">Agregar Tipo Proveedor</a> |
+    <a asp-controller="PurchaseDetails" asp-action="Index">Regresar a Detalles de Compras</a>
 
 </p>
+<form method="get" asp-controller="Providers" asp-action="Index">
+    <div class="form-group">
+        <input type="text" name="searchString" class="form-control" placeholder="Buscar por nombre de producto" value="@ViewData["CurrentFilter"]" />
+        <br />
+        <input type="submit" value="Buscar" class="btn btn-primary" />
+    </div>
+</form>
+<br />
 <table class="table">
     <thead>
         <tr>
@@ -23,6 +32,9 @@
             </th>
             <th>
                 Direccion
+            </th>
+            <th>
+                Tipo de Proveedor
             </th>
             <th></th>
         </tr>
@@ -38,6 +50,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoriaProveedor.CategoriaProveedorNombre)
             </td>
             <td>
                     @if (ViewContext.HttpContext.User.IsInRole("Administrador"))

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Trekstore.Models.CategoriaProveedor>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Tipo de Proveedor</h1>
+
+<p>
+    <a asp-action="Create">Agregar Nuevo Tipo de proveedor</a> |
+    <a asp-controller="Providers" asp-action="Index">Regresar a Proveedores</a>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre de la categoria
+            </th>
+            <th>
+                Descripcion de la categoria
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoriaProveedorNombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoriaProveedorDescripcion)
+            </td>
+            <td>
+                    @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
+                    {
+                <a asp-action="Edit" asp-route-id="@item.CategoriaProveedorID">Editar | </a> 
+                <a asp-action="Delete" asp-route-id="@item.CategoriaProveedorID">Eliminar</a>
+                    }
+
+                    @if (ViewContext.HttpContext.User.IsInRole("Supervisor"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.CategoriaProveedorID">Editar</a>
+                        
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
