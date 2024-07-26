@@ -11,8 +11,8 @@
 <h1>Reporte de Compras</h1>
 
 <p>
-    <a asp-action="Create">Agregar Nuevo Compra</a> |
-    <a asp-controller="Providers" asp-action="Index">Agregar Proveedor</a> 
+    <a asp-action="Create" class="custom3-link">Agregar Nuevo Compra</a> |
+    <a asp-controller="Providers" asp-action="Index" class="custom3-link">Agregar Proveedor</a>
 
 </p>
 
@@ -85,13 +85,13 @@ mb-3">
                 <td>
                     @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.purch_id">Editar | </a>
-                        <a asp-action="Delete" asp-route-id="@item.purch_id">Eliminar</a>
+                        <a asp-action="Edit" asp-route-id="@item.purch_id" class="custom3-link">Editar | </a>
+                        <a asp-action="Delete" asp-route-id="@item.purch_id" class="custom3-link">Eliminar</a>
                     }
 
                     @if (ViewContext.HttpContext.User.IsInRole("Supervisor"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.purch_id">Editar</a>
+                        <a asp-action="Edit" asp-route-id="@item.purch_id" class="custom3-link">Editar</a>
 
                     }
                 </td>

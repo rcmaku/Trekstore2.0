@@ -10,8 +10,8 @@
 <h1>Tipo de Proveedor</h1>
 
 <p>
-    <a asp-action="Create">Agregar Nuevo Tipo de proveedor</a> |
-    <a asp-controller="Providers" asp-action="Index">Regresar a Proveedores</a>
+    <a asp-action="Create" class="custom3-link">Agregar Nuevo Tipo de proveedor</a> |
+    <a asp-controller="Providers" asp-action="Index" class="custom3-link">Regresar a Proveedores</a>
 
 </p>
 <table class="table">
@@ -38,13 +38,13 @@
             <td>
                     @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
                     {
-                <a asp-action="Edit" asp-route-id="@item.CategoriaProveedorID">Editar | </a> 
-                <a asp-action="Delete" asp-route-id="@item.CategoriaProveedorID">Eliminar</a>
+                        <a asp-action="Edit" asp-route-id="@item.CategoriaProveedorID" class="custom3-link">Editar | </a>
+                        <a asp-action="Delete" asp-route-id="@item.CategoriaProveedorID" class="custom3-link">Eliminar</a>
                     }
 
                     @if (ViewContext.HttpContext.User.IsInRole("Supervisor"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.CategoriaProveedorID">Editar</a>
+                        <a asp-action="Edit" asp-route-id="@item.CategoriaProveedorID" class="custom3-link">Editar</a>
                         
                     }
             </td>

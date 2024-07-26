@@ -12,8 +12,8 @@
 <h1>Productos</h1>
 
 <p>
-    <a asp-action="Create">Agregar Nuevo Producto</a> |
-    <a asp-controller="Categories" asp-action="Index">Categorias de Producto</a>
+    <a asp-action="Create" class="custom-link">Agregar Nuevo Producto</a> |
+    <a asp-controller="Categories" asp-action="Index" class="custom-link">Categorias de Producto</a>
 </p>
     </p>
 <form method="get" asp-controller="Products" asp-action="Index">
@@ -67,13 +67,13 @@
                 <td>
                     @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.ProductId">Editar |</a>
-                        <a asp-action="Delete" asp-route-id="@item.ProductId">Eliminar</a>
+                        <a asp-action="Edit" asp-route-id="@item.ProductId" class="custom-link">Editar |</a>
+                        <a asp-action="Delete" asp-route-id="@item.ProductId" class="custom-link">Eliminar</a>
                     }
 
                     @if (ViewContext.HttpContext.User.IsInRole("Supervisor"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.ProductId">Editar |</a>
+                        <a asp-action="Edit" asp-route-id="@item.ProductId" class="custom-link">Editar |</a>
 
                     }
 

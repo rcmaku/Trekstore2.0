@@ -13,15 +13,15 @@
 <p>
     @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
     {
-        <a asp-action="Create">Nuevo Cliente | </a>
-        <a asp-controller="SalesDetails" asp-action="Index">Reporte de Ventas</a>
+        <a asp-action="Create" class="custom2-link">Nuevo Cliente | </a>
+        <a asp-controller="SalesDetails" asp-action="Index" class="custom2-link">Reporte de Ventas</a>
     }
 
 
     @if (ViewContext.HttpContext.User.IsInRole("Ventas"))
     {
-        <a asp-action="Create">Nuevo Cliente | </a>
-        <a asp-controller="SalesDetails" asp-action="Index">Regresar</a>
+        <a asp-action="Create" class="custom2-link">Nuevo Cliente | </a>
+        <a asp-controller="SalesDetails" asp-action="Index" class="custom2-link">Regresar</a>
     }
 
 </p>
@@ -62,13 +62,13 @@
                 <td>
                     @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.ClientId">Editar | </a>
-                        <a asp-action="Delete" asp-route-id="@item.ClientId">Eliminar</a>
+                        <a asp-action="Edit" asp-route-id="@item.ClientId" class="custom2-link">Editar | </a>
+                        <a asp-action="Delete" asp-route-id="@item.ClientId" class="custom2-link">Eliminar</a>
                     }
 
                     @if (ViewContext.HttpContext.User.IsInRole("Supervisor"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.ClientId">Editar</a>
+                        <a asp-action="Edit" asp-route-id="@item.ClientId" class="custom2-link">Editar</a>
 
                     }
                 </td>

@@ -118,7 +118,7 @@ namespace Trekstore.Controllers
                 return NotFound();
             }
             ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "FirstName", salesDetails.ClientId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductDescription", salesDetails.ProductId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName", salesDetails.ProductId);
             ViewData["TipoDePagoID"] = new SelectList(_context.TipoDePago, "tipoPagoID", "tipoPago", salesDetails.TipoDePagoID);
             return View(salesDetails);
         }

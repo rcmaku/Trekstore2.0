@@ -11,8 +11,8 @@
 <h1>Reporte de Ventas</h1>
 
 <p>
-    <a asp-controller="Clients" asp-action="Index">Clientes </a> |
-    <a asp-action="Create">Nueva Venta</a>
+    <a asp-controller="Clients" asp-action="Index" class="custom4-link" >Clientes </a> |
+    <a asp-action="Create" class="custom4-link">Nueva Venta</a>
 </p>
 <form method="get" asp-controller="SalesDetails" asp-action="Index">
     <div class="form-group">
@@ -72,13 +72,13 @@
                 <td>
                     @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.SalesDetailsID">Editar</a>
-                        <a asp-action="Delete" asp-route-id="@item.SalesDetailsID">Eliminar</a>
+                        <a asp-action="Edit" asp-route-id="@item.SalesDetailsID" class="custom4-link">Editar</a>
+                        <a asp-action="Delete" asp-route-id="@item.SalesDetailsID" class="custom4-link">Eliminar</a>
                     }
 
                     @if (ViewContext.HttpContext.User.IsInRole("Supervisor"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.SalesDetailsID">Editar</a>
+                        <a asp-action="Edit" asp-route-id="@item.SalesDetailsID" class="custom4-link">Editar</a>
 
                     }
                 </td>

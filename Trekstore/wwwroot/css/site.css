@@ -78,3 +78,42 @@ body {
     color: white;
 }
 
+.justify-content-center {
+    color: black;
+}
+
+.custom-link {
+    color: white; 
+    text-decoration: none; 
+}
+
+    .custom-link:hover {
+        color: darkred; 
+    }
+
+.custom2-link {
+    color: white;
+    text-decoration: none;
+}
+
+    .custom2-link:hover {
+        color: darkred;
+    }
+
+.custom3-link {
+    color: white;
+    text-decoration: none;
+}
+
+.custom3-link:hover {
+    color: darkred;
+}
+
+.custom4-link {
+    color: white;
+    text-decoration: none;
+}
+
+    .custom4-link:hover {
+        color: darkred;
+    }

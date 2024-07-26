@@ -11,8 +11,8 @@
 <h1>Categorias</h1>
 
 <p>
-    <a asp-action="Create">Nueva Categoria</a> |
-    <a asp-controller="Products" asp-action="Index">Regresar</a>
+    <a asp-action="Create" class="custom-link">Nueva Categoria</a> |
+    <a asp-controller="Products" asp-action="Index" class="custom-link">Regresar</a>
 </p>
 <table class="table">
     <thead>
@@ -39,13 +39,13 @@
                 <td>
                     @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.CategoryID">Editar | </a>
-                        <a asp-action="Delete" asp-route-id="@item.CategoryID">Eliminar</a>
+                        <a asp-action="Edit" asp-route-id="@item.CategoryID" class="custom-link">Editar | </a>
+                        <a asp-action="Delete" asp-route-id="@item.CategoryID" class="custom-link">Eliminar</a>
                     }
 
                     @if (ViewContext.HttpContext.User.IsInRole("Supervisor"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.CategoryID">Editar</a>
+                        <a asp-action="Edit" asp-route-id="@item.CategoryID" class="custom-link">Editar</a>
 
 
                     }

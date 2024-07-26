@@ -11,9 +11,9 @@
 <h1>Proveedores</h1>
 
 <p>
-    <a asp-action="Create">Agregar Proveedor</a> |
-    <a asp-controller="CategoriaProveedor" asp-action="Index">Agregar Tipo Proveedor</a> |
-    <a asp-controller="PurchaseDetails" asp-action="Index">Regresar a Detalles de Compras</a>
+    <a asp-action="Create" class="custom3-link">Agregar Proveedor</a> |
+    <a asp-controller="CategoriaProveedor" asp-action="Index" class="custom3-link">Agregar Tipo Proveedor</a> |
+    <a asp-controller="PurchaseDetails" asp-action="Index" class="custom3-link">Regresar a Detalles de Compras</a>
 
 </p>
 <form method="get" asp-controller="Providers" asp-action="Index">
@@ -60,13 +60,13 @@
             <td>
                     @if (ViewContext.HttpContext.User.IsInRole("Administrador"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.ProviderID">Editar | </a>
-                        <a asp-action="Delete" asp-route-id="@item.ProviderID">Eliminar</a>
+                        <a asp-action="Edit" asp-route-id="@item.ProviderID" class="custom3-link">Editar | </a>
+                        <a asp-action="Delete" asp-route-id="@item.ProviderID" class="custom3-link">Eliminar</a>
                     }
 
                     @if (ViewContext.HttpContext.User.IsInRole("Ventas, Supervisor"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.ProviderID">Editar</a>
+                        <a asp-action="Edit" asp-route-id="@item.ProviderID" class="custom3-link">Editar</a>
                     }
             </td>
         </tr>
